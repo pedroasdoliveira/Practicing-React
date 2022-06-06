@@ -1,22 +1,36 @@
+import axios from 'axios';
+
+const http = axios.create({
+    baseURL: 'https://jsonplaceholder.typicode.com'
+})
+
 export const api = {
   getAllPosts: async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const json = await response.json();
-    return json;
+    const response = await http.get('/post')
+    return response.data
+
+    // const response = await fetch(`${baseUrl}/posts`);
+    // const json = await response.json();
+    // return json;
   },
   addNewPost: async (title: string, body: string, userId: number) => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        body,
-        userId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await http.post(`/posts`, {
+        title, body, userId
     });
-    const json = await response.json();
-    return json;
+    return response.data;
+
+    // const response = await fetch(`${baseUrl}/posts`, {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     title,
+    //     body,
+    //     userId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const json = await response.json();
+    // return json;
   },
 };
